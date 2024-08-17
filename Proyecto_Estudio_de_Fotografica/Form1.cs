@@ -6,5 +6,10 @@ namespace Proyecto_Estudio_de_Fotografica
         {
             InitializeComponent();
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
