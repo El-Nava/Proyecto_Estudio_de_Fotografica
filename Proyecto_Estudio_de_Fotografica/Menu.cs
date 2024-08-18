@@ -8,12 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Proyecto_Estudio_de_Fotografica
-{
-    public partial class Menu : Form
-    {
-        public Menu()
-        {
+namespace Proyecto_Estudio_de_Fotografica{
+    public partial class Menu : Form{
+        public Menu(){
             InitializeComponent();
         }
     }
