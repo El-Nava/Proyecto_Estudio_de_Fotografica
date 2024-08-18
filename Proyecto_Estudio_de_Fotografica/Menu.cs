@@ -13,5 +13,7 @@ namespace Proyecto_Estudio_de_Fotografica{
         public Menu(){
             InitializeComponent();
         }
+
+
     }
 }

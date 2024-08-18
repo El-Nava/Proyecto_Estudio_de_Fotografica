@@ -47,6 +47,7 @@
             btn_login.TabIndex = 0;
             btn_login.Text = "Login";
             btn_login.UseVisualStyleBackColor = true;
+            btn_login.Click += btn_login_Click;
             // 
             // tb_user
             // 
@@ -114,7 +115,10 @@
             Controls.Add(tb_user);
             Controls.Add(btn_login);
             Margin = new Padding(3, 2, 3, 2);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "Login";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
             ((System.ComponentModel.ISupportInitialize)pb_userIcon).EndInit();
             ((System.ComponentModel.ISupportInitialize)pb_lockIcon).EndInit();

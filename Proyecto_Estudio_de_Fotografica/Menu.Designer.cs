@@ -26,8 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             tab_consultarCitas = new TabPage();
             tab_citasAgendadas = new TabPage();
             tab_agendarCitas = new TabPage();
@@ -50,7 +49,7 @@
             tab_citasAgendadas.Location = new Point(4, 24);
             tab_citasAgendadas.Name = "tab_citasAgendadas";
             tab_citasAgendadas.Padding = new Padding(3);
-            tab_citasAgendadas.Size = new Size(768, 375);
+            tab_citasAgendadas.Size = new Size(768, 398);
             tab_citasAgendadas.TabIndex = 1;
             tab_citasAgendadas.Text = "Ver citas agendadas";
             tab_citasAgendadas.UseVisualStyleBackColor = true;
@@ -60,7 +59,7 @@
             tab_agendarCitas.Location = new Point(4, 24);
             tab_agendarCitas.Name = "tab_agendarCitas";
             tab_agendarCitas.Padding = new Padding(3);
-            tab_agendarCitas.Size = new Size(768, 375);
+            tab_agendarCitas.Size = new Size(768, 398);
             tab_agendarCitas.TabIndex = 0;
             tab_agendarCitas.Text = "Agendar citas";
             tab_agendarCitas.UseVisualStyleBackColor = true;
@@ -74,6 +73,7 @@
             tab_menu.Name = "tab_menu";
             tab_menu.SelectedIndex = 0;
             tab_menu.Size = new Size(776, 426);
+            tab_menu.SizeMode = TabSizeMode.Fixed;
             tab_menu.TabIndex = 0;
             // 
             // Menu
@@ -83,7 +83,9 @@
             ClientSize = new Size(800, 450);
             Controls.Add(tab_menu);
             Name = "Menu";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu";
+            WindowState = FormWindowState.Maximized;
             tab_menu.ResumeLayout(false);
             ResumeLayout(false);
         }
