@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Proyecto_Estudio_de_Fotografica {
+﻿namespace Proyecto_Estudio_de_Fotografica
+{
     public static class Funciones_y_Mas {
         static String Usuario = "u";
         static String Contra = "123";
