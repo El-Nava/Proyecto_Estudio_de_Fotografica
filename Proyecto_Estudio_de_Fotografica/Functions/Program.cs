@@ -1,4 +1,4 @@
-namespace Proyecto_Estudio_de_Fotografica
+namespace Proyecto_Estudio_de_Fotografica.Functions
 {
     internal static class Program
     {
