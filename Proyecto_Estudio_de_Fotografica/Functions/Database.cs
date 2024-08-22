@@ -5,7 +5,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Proyecto_Estudio_de_Fotografica.Functions {
     public static class Database {
         // Conexión a Base de Datos
-        static String connectionString = "Server=localhost;Database=Un_Instante;User ID=root;Password=studio2024;";
+        static string connectionString = "Server=localhost;Database=un_instante;User ID=root;Password=JesusNava(15);";
 
         public static MySqlConnection Abrir_Conexion() {
             try {
@@ -30,10 +30,10 @@ namespace Proyecto_Estudio_de_Fotografica.Functions {
             string apellidoPaterno,
             string apellidoMaterno,
             string telefono,
-            decimal altura,
+            float altura,
             DateTime fechaCita,
             int servicioId,
-            decimal monto,
+            float monto,
             DateTime fechaPago,
             string metodoPago) {
 
@@ -64,5 +64,37 @@ namespace Proyecto_Estudio_de_Fotografica.Functions {
                 }
             }
         }
+
+        public static List<KeyValuePair<int, string>> Servicios()
+        {
+            var resultado = new List<KeyValuePair<int, string>>();
+
+            using (MySqlConnection connection = Abrir_Conexion())
+            {
+                using (MySqlCommand cmd = new MySqlCommand("Select * from servicio", connection))
+                {
+                    try
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int id = reader.GetInt32(0); // Asumiendo que el ID está en la primera columna
+                                string nombre = reader.GetString(1); // Asumiendo que el nombre está en la segunda columna
+                                resultado.Add(new KeyValuePair<int, string>(id, nombre));
+                            }
+                        }
+                    }
+                    catch (MySqlException ex)
+                    {
+                        Console.WriteLine($"Error al ejecutar la consulta: {ex.Message}");
+                        throw;
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
     }
 }
