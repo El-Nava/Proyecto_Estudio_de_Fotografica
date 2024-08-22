@@ -26,29 +26,17 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
-            btn_Login = new Button();
+        private void InitializeComponent() {
             tb_User = new TextBox();
             tb_Password = new TextBox();
             pb_UserIcon = new PictureBox();
             pb_LockIcon = new PictureBox();
             lbl_Password = new Label();
             lbl_User = new Label();
+            btn_Login = new Customs.CustomButtonRound1();
             ((System.ComponentModel.ISupportInitialize)pb_UserIcon).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pb_LockIcon).BeginInit();
             SuspendLayout();
-            // 
-            // btn_Login
-            // 
-            btn_Login.Location = new Point(83, 184);
-            btn_Login.Margin = new Padding(3, 2, 3, 2);
-            btn_Login.Name = "btn_Login";
-            btn_Login.Size = new Size(158, 34);
-            btn_Login.TabIndex = 0;
-            btn_Login.Text = "Login";
-            btn_Login.UseVisualStyleBackColor = true;
-            btn_Login.Click += btn_Login_Click;
             // 
             // tb_User
             // 
@@ -102,19 +90,38 @@
             lbl_User.TabIndex = 6;
             lbl_User.Text = "Usuario";
             // 
+            // btn_Login
+            // 
+            btn_Login.BackColor = Color.DarkTurquoise;
+            btn_Login.BackGroundColor = Color.DarkTurquoise;
+            btn_Login.BorderColor = Color.PaleVioletRed;
+            btn_Login.BorderRadius = 20;
+            btn_Login.BorderSize = 0;
+            btn_Login.FlatAppearance.BorderSize = 0;
+            btn_Login.FlatStyle = FlatStyle.Flat;
+            btn_Login.ForeColor = Color.Black;
+            btn_Login.Location = new Point(82, 214);
+            btn_Login.Name = "btn_Login";
+            btn_Login.Size = new Size(150, 40);
+            btn_Login.TabIndex = 7;
+            btn_Login.Text = "Login";
+            btn_Login.TextColor = Color.Black;
+            btn_Login.UseVisualStyleBackColor = false;
+            btn_Login.Click += btn_Login_Click;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(316, 316);
+            Controls.Add(btn_Login);
             Controls.Add(lbl_User);
             Controls.Add(lbl_Password);
             Controls.Add(pb_LockIcon);
             Controls.Add(pb_UserIcon);
             Controls.Add(tb_Password);
             Controls.Add(tb_User);
-            Controls.Add(btn_Login);
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             MinimizeBox = false;
@@ -128,13 +135,12 @@
         }
 
         #endregion
-
-        private Button btn_Login;
         private TextBox tb_User;
         private TextBox tb_Password;
         private PictureBox pb_UserIcon;
         private PictureBox pb_LockIcon;
         private Label lbl_Password;
         private Label lbl_User;
+        private Customs.CustomButtonRound1 btn_Login;
     }
 }

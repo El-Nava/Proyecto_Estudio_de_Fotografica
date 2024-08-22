@@ -1,9 +1,9 @@
 ﻿namespace Proyecto_Estudio_de_Fotografica.Functions
 {
-    public static class Funciones_y_Mas
+    public static class Fn_Login
     {
-        static string Usuario = "u";
-        static string Contra = "123";
+        static string Usuario = "1";
+        static string Contra = "1";
 
         public static bool Comprobar(string user, string pass)
         {
