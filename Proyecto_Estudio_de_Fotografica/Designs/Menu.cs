@@ -38,7 +38,7 @@ namespace Proyecto_Estudio_de_Fotografica{
                     // Intentar convertir los valores de los TextBox a float
                     bool alturaValida = float.TryParse(tb_Altura_Agendar.Text, out altura);
                     bool anticipoValido = float.TryParse(tb_anticipo.Text, out anticipo);
-                    MessageBox.Show(cb_metodo.ToString());
+                    MessageBox.Show(cb_metodo.SelectedItem.ToString());
                     if (alturaValida && anticipoValido)
                     {
                         Database.Agregar_Cliente(
@@ -51,7 +51,7 @@ namespace Proyecto_Estudio_de_Fotografica{
                             Convert.ToInt32(paqueteSeleccionado),
                             anticipo,
                             date_liquidar.Value,  // Usado Value en lugar de DateTimePicker
-                            cb_metodo.ToString()
+                            cb_metodo.SelectedItem.ToString()
                         );
                     }
                     else
@@ -66,16 +66,12 @@ namespace Proyecto_Estudio_de_Fotografica{
             }
         }
 
-    private void LoadPaquetes(object? sender, EventArgs e)
-        {
+    private void LoadPaquetes(object? sender, EventArgs e){
             var datos = Database.Servicios();
 
             cb_Paquete_Agendar.DisplayMember = "Value";
             cb_Paquete_Agendar.ValueMember = "Key";
             cb_Paquete_Agendar.DataSource = datos;
-
         }
-
     }
-
 }

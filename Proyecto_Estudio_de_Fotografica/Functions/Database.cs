@@ -5,7 +5,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Proyecto_Estudio_de_Fotografica.Functions {
     public static class Database {
         // Conexión a Base de Datos
-        static string connectionString = "Server=localhost;Database=un_instante;User ID=root;Password=JesusNava(15);";
+        static string connectionString = "Server=localhost;Database=un_instante;User ID=root;Password=20200321a;";
 
         public static MySqlConnection Abrir_Conexion() {
             try {

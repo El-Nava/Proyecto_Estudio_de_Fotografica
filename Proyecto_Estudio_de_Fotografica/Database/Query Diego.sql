@@ -22,8 +22,14 @@ CALL add_clientecita(
     'Efectivo'
 );
 
+-- Ver Tabla de Pagos
+select * from pago
+
 -- Ver Lista de Clientes
 select * from view_nombre_telefono;
 
 -- Ver Tabla de Clientes
 select * from cliente;
+
+-- Ver Citas
+select * from view_citas_pendientes
