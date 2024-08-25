@@ -5,24 +5,32 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace Proyecto_Estudio_de_Fotografica.Functions {
     public static class Database {
         // Conexión a Base de Datos
-        static string connectionString = "Server=localhost;Database=un_instante;User ID=root;Password=20200321a;";
+        static string[] connectionStrings = {
+            "Server=localhost;Database=un_instante;User ID=root;Password='anotherPassword';",//Conexion Nava
+            "Server=localhost;Database=un_instante;User ID=root;Password='h)~e6q?5;~CWk/><hVJ';", //Conexion Jorge
+            "Server=localhost;Database=un_instante;User ID=root;Password='anotherPassword';"//Conexion Diego
+        };
 
         public static MySqlConnection Abrir_Conexion() {
-            try {
-                MySqlConnection connection = new(connectionString);
-                connection.Open();
-                return connection;
-            }
-            catch (MySqlException ex) { // Maneja excepciones específicas de MySQL
-                Console.WriteLine($"Error al abrir la conexión: {ex.Message}");
-                // Puedes volver a lanzar la excepción o manejarla de acuerdo a tus necesidades
-                throw;
-            }
-            catch (Exception ex) {  // Maneja cualquier otra excepción general
-                // Aquí puedes manejar excepciones no relacionadas directamente con MySQL
-                Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
-                throw;
-            }
+
+            MySqlConnection connection = null!;
+
+            foreach (string connectionString in connectionStrings)
+            {
+                try
+                {
+                    connection = new MySqlConnection(connectionString);
+                    connection.Open();
+                    Console.WriteLine($"Conexión exitosa con: {connection.DataSource}");
+                    return connection;
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine($"No se pudo conectar con: {connectionString}");
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }  
+            return null!;
         }
 
         public static void Agregar_Cliente(

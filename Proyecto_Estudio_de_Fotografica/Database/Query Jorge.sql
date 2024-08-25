@@ -1,0 +1,1 @@
+select * from contabilidad_anual
