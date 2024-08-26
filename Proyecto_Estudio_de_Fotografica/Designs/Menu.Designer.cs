@@ -26,13 +26,14 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
+            components = new System.ComponentModel.Container();
             tab_consultarCitas = new TabPage();
             btn_ConsultarCita_Consultar = new Button();
             tb_NombreCompleto_Consulta = new TextBox();
             lbl_NombreCompleto_Consulta = new Label();
             tab_citasAgendadas = new TabPage();
+            lv_VerCitas = new ListView();
             tab_agendarCitas = new TabPage();
             date_liquidar = new DateTimePicker();
             lb_fecha_liquidar = new Label();
@@ -56,7 +57,9 @@
             lbl_fondo = new Label();
             tab_menu = new TabControl();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            t_Actualizar_Citas_VerCitas = new System.Windows.Forms.Timer(components);
             tab_consultarCitas.SuspendLayout();
+            tab_citasAgendadas.SuspendLayout();
             tab_agendarCitas.SuspendLayout();
             tab_menu.SuspendLayout();
             SuspendLayout();
@@ -106,12 +109,21 @@
             // tab_citasAgendadas
             // 
             tab_citasAgendadas.BackColor = Color.LightGray;
+            tab_citasAgendadas.Controls.Add(lv_VerCitas);
             tab_citasAgendadas.Location = new Point(4, 24);
             tab_citasAgendadas.Name = "tab_citasAgendadas";
             tab_citasAgendadas.Padding = new Padding(3);
             tab_citasAgendadas.Size = new Size(752, 309);
             tab_citasAgendadas.TabIndex = 1;
             tab_citasAgendadas.Text = "Ver citas agendadas";
+            // 
+            // lv_VerCitas
+            // 
+            lv_VerCitas.Location = new Point(6, 6);
+            lv_VerCitas.Name = "lv_VerCitas";
+            lv_VerCitas.Size = new Size(740, 297);
+            lv_VerCitas.TabIndex = 0;
+            lv_VerCitas.UseCompatibleStateImageBehavior = false;
             // 
             // tab_agendarCitas
             // 
@@ -383,17 +395,26 @@
             tab_menu.Size = new Size(760, 337);
             tab_menu.TabIndex = 0;
             // 
+            // t_Actualizar_Citas_VerCitas
+            // 
+            t_Actualizar_Citas_VerCitas.Enabled = true;
+            t_Actualizar_Citas_VerCitas.Interval = 1000;
+            t_Actualizar_Citas_VerCitas.Tick += t_Actualizar_Citas_VerCitas_Tick;
+            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 361);
             Controls.Add(tab_menu);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "Menu";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Menu";
             tab_consultarCitas.ResumeLayout(false);
             tab_consultarCitas.PerformLayout();
+            tab_citasAgendadas.ResumeLayout(false);
             tab_agendarCitas.ResumeLayout(false);
             tab_agendarCitas.PerformLayout();
             tab_menu.ResumeLayout(false);
@@ -429,5 +450,7 @@
         private ComboBox cb_metodo;
         private Label lb_fecha_liquidar;
         private DateTimePicker date_liquidar;
+        private ListView lv_VerCitas;
+        private System.Windows.Forms.Timer t_Actualizar_Citas_VerCitas;
     }
 }

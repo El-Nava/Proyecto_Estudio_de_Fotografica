@@ -122,10 +122,12 @@
             Controls.Add(pb_UserIcon);
             Controls.Add(tb_Password);
             Controls.Add(tb_User);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "Login";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
             ((System.ComponentModel.ISupportInitialize)pb_UserIcon).EndInit();

@@ -12,5 +12,7 @@ namespace Proyecto_Estudio_de_Fotografica.Functions {
         }
 
 
+
+        
     }
 }

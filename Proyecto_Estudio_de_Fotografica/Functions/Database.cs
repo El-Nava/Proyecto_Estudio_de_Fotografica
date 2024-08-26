@@ -6,9 +6,9 @@ namespace Proyecto_Estudio_de_Fotografica.Functions {
     public static class Database {
         // Conexión a Base de Datos
         static string[] connectionStrings = {
-            "Server=localhost;Database=un_instante;User ID=root;Password='anotherPassword';",//Conexion Nava
+            "Server=localhost;Database=un_instante;User ID=root;Password=JesusNava(15);",//Conexion Nava
             "Server=localhost;Database=un_instante;User ID=root;Password='h)~e6q?5;~CWk/><hVJ';", //Conexion Jorge
-            "Server=localhost;Database=un_instante;User ID=root;Password='anotherPassword';"//Conexion Diego
+            "Server=localhost;Database=un_instante;User ID=root;Password='20200321a';"//Conexion Diego
         };
 
         public static MySqlConnection Abrir_Conexion() {
@@ -103,6 +103,48 @@ namespace Proyecto_Estudio_de_Fotografica.Functions {
 
             return resultado;
         }
+        // --------------------- Sección de Ver Citas Agendadas ------------------------------
+        public class Cita {
+            public int Id { get; set; }
+            public string Nombre { get; set; }
+            public string ApellidoPaterno { get; set; }
+            public string ApellidoMaterno { get; set; }
+            public DateTime FechaCita { get; set; }
+            public string Paquete { get; set; }
+            public float Monto { get; set; }
+        }
 
+        public static List<Cita> ObtenerCitas() {
+            var citas = new List<Cita>();
+
+            using (MySqlConnection connection = Abrir_Conexion()) {
+                using (MySqlCommand cmd = new MySqlCommand("SELECT CitaID, Nombre,"
+                        + "Apellido_paterno, Apellido_materno, FechaAgendada,"
+                        + "NombreServicio FROM view_citas_pendientes", connection)) {
+                    try {
+                        using (MySqlDataReader reader = cmd.ExecuteReader()) {
+                            while (reader.Read()) {
+                                var cita = new Cita {
+                                    Id = reader.GetInt32("CitaID"),
+                                    Nombre = reader.GetString("Nombre"),
+                                    ApellidoPaterno = reader.GetString("Apellido_paterno"),
+                                    ApellidoMaterno = reader.GetString("Apellido_materno"),
+                                    FechaCita = reader.GetDateTime("FechaAgendada"),
+                                    Paquete = reader.GetString("NombreServicio"),
+                                    Monto = 0 // Como la vista no incluye monto, se pone 0
+                                };
+                                citas.Add(cita);
+                            }
+                        }
+                    }
+                    catch (MySqlException ex) {
+                        Console.WriteLine($"Error al ejecutar la consulta: {ex.Message}");
+                        throw;
+                    }
+                }
+            }
+
+            return citas;
+        }
     }
 }
