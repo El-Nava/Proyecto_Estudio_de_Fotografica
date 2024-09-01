@@ -13,7 +13,7 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
             _menuInstance = menuInstance;
         }
 
-        public void CargarBaseDeDatos()
+        public void CargarBaseDeDatos(int opcion)
         {
             // Reutiliza la conexión de la clase Database
             using (MySqlConnection conn = Database.Abrir_Conexion())
@@ -24,8 +24,32 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
                     return;
                 }
 
-                string query = "SELECT CitaID, ClienteID, FechaAgendada, HoraAgendada, ServicioID, Pago, EstadoCita FROM citas";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                string query;
+
+                // FALTA CORREGIR (El Lunes le doy)
+                // Seleccionar la consulta SQL según la opción
+                switch (opcion) {
+                    case 1: //Ver Todas las Citas
+                        query = "SELECT CitaID, ClienteID, FechaAgendada, HoraAgendada, ServicioID, Pago, EstadoCita FROM citas";
+                        break;
+                    case 2: // Ver Citas Vencidas
+                        query = "SELECT CitaID, ClienteID, FechaAgendada, HoraAgendada, ServicioID, Pago, EstadoCita " +
+                                "FROM citas WHERE EstadoCita != 'Completada' AND CONCAT(FechaAgendada, ' ', HoraAgendada) < NOW()";
+                        break;
+                    case 3: // Ver Citas del Día
+                        query = "SELECT CitaID, ClienteID, FechaAgendada, HoraAgendada, ServicioID, Pago, EstadoCita " +
+                                "FROM citas WHERE DATE(FechaAgendada) = CURDATE()";
+                        break;
+                    case 4: // Ver Citas Pendientes
+                        query = "SELECT CitaID, ClienteID, FechaAgendada, HoraAgendada, ServicioID, Pago, EstadoCita " +
+                                "FROM citas WHERE EstadoCita != 'Completada'";
+                        break;
+                    default:
+                        MessageBox.Show("Opción inválida.");
+                        return;
+                }
+
+                MySqlCommand cmd = new(query, conn);
 
                 try
                 {

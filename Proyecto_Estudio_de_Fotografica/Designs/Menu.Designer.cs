@@ -26,15 +26,17 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             tab_consultarCitas = new TabPage();
             btn_ConsultarCita_Consultar = new Button();
             tb_NombreCompleto_Consulta = new TextBox();
             lbl_NombreCompleto_Consulta = new Label();
             tab_citasAgendadas = new TabPage();
-            btn_CargarDatos = new Customs.CustomButtonRound1();
-            customButtonRound11 = new Customs.CustomButtonRound1();
+            bt_CitasdelDia_VerCitas = new Customs.CustomButtonRound1();
+            bt_CitasPendientes_VerCitas = new Customs.CustomButtonRound1();
+            bt_CitasVencidas_VerCitas = new Customs.CustomButtonRound1();
+            btn_EliminarDato = new Customs.CustomButtonRound1();
+            btn_VerTodas_VerCitas = new Customs.CustomButtonRound1();
             lv_VerCitas = new ListView();
             tab_agendarCitas = new TabPage();
             date_Hora_Agendar = new DateTimePicker();
@@ -56,7 +58,6 @@
             lbl_fondo = new Label();
             tab_menu = new TabControl();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            btn_EliminarDato = new Customs.CustomButtonRound1();
             tab_consultarCitas.SuspendLayout();
             tab_citasAgendadas.SuspendLayout();
             tab_agendarCitas.SuspendLayout();
@@ -108,9 +109,11 @@
             // tab_citasAgendadas
             // 
             tab_citasAgendadas.BackColor = Color.LightGray;
+            tab_citasAgendadas.Controls.Add(bt_CitasdelDia_VerCitas);
+            tab_citasAgendadas.Controls.Add(bt_CitasPendientes_VerCitas);
+            tab_citasAgendadas.Controls.Add(bt_CitasVencidas_VerCitas);
             tab_citasAgendadas.Controls.Add(btn_EliminarDato);
-            tab_citasAgendadas.Controls.Add(btn_CargarDatos);
-            tab_citasAgendadas.Controls.Add(customButtonRound11);
+            tab_citasAgendadas.Controls.Add(btn_VerTodas_VerCitas);
             tab_citasAgendadas.Controls.Add(lv_VerCitas);
             tab_citasAgendadas.Location = new Point(4, 24);
             tab_citasAgendadas.Name = "tab_citasAgendadas";
@@ -119,49 +122,111 @@
             tab_citasAgendadas.TabIndex = 1;
             tab_citasAgendadas.Text = "Ver citas agendadas";
             // 
-            // btn_CargarDatos
+            // bt_CitasdelDia_VerCitas
             // 
-            btn_CargarDatos.BackColor = Color.MediumSlateBlue;
-            btn_CargarDatos.BackGroundColor = Color.MediumSlateBlue;
-            btn_CargarDatos.BorderColor = Color.PaleVioletRed;
-            btn_CargarDatos.BorderRadius = 34;
-            btn_CargarDatos.BorderSize = 0;
-            btn_CargarDatos.FlatAppearance.BorderSize = 0;
-            btn_CargarDatos.FlatStyle = FlatStyle.Flat;
-            btn_CargarDatos.ForeColor = Color.White;
-            btn_CargarDatos.Location = new Point(439, 275);
-            btn_CargarDatos.Margin = new Padding(3, 2, 3, 2);
-            btn_CargarDatos.Name = "btn_CargarDatos";
-            btn_CargarDatos.Size = new Size(152, 34);
-            btn_CargarDatos.TabIndex = 2;
-            btn_CargarDatos.Text = "Cargar Datos";
-            btn_CargarDatos.TextColor = Color.White;
-            btn_CargarDatos.UseVisualStyleBackColor = false;
-            btn_CargarDatos.Click += btn_CargarDatos_Click;
+            bt_CitasdelDia_VerCitas.BackColor = Color.MediumSlateBlue;
+            bt_CitasdelDia_VerCitas.BackGroundColor = Color.MediumSlateBlue;
+            bt_CitasdelDia_VerCitas.BorderColor = Color.PaleVioletRed;
+            bt_CitasdelDia_VerCitas.BorderRadius = 34;
+            bt_CitasdelDia_VerCitas.BorderSize = 0;
+            bt_CitasdelDia_VerCitas.FlatAppearance.BorderSize = 0;
+            bt_CitasdelDia_VerCitas.FlatStyle = FlatStyle.Flat;
+            bt_CitasdelDia_VerCitas.ForeColor = Color.White;
+            bt_CitasdelDia_VerCitas.Location = new Point(147, 273);
+            bt_CitasdelDia_VerCitas.Margin = new Padding(3, 2, 3, 2);
+            bt_CitasdelDia_VerCitas.Name = "bt_CitasdelDia_VerCitas";
+            bt_CitasdelDia_VerCitas.Size = new Size(152, 34);
+            bt_CitasdelDia_VerCitas.TabIndex = 6;
+            bt_CitasdelDia_VerCitas.Text = "Ver Citas del Día";
+            bt_CitasdelDia_VerCitas.TextColor = Color.White;
+            bt_CitasdelDia_VerCitas.UseVisualStyleBackColor = false;
+            bt_CitasdelDia_VerCitas.Click += bt_CitasdelDia_VerCitas_Click;
             // 
-            // customButtonRound11
+            // bt_CitasPendientes_VerCitas
             // 
-            customButtonRound11.BackColor = Color.MediumSlateBlue;
-            customButtonRound11.BackGroundColor = Color.MediumSlateBlue;
-            customButtonRound11.BorderColor = Color.PaleVioletRed;
-            customButtonRound11.BorderRadius = 34;
-            customButtonRound11.BorderSize = 0;
-            customButtonRound11.FlatAppearance.BorderSize = 0;
-            customButtonRound11.FlatStyle = FlatStyle.Flat;
-            customButtonRound11.ForeColor = Color.White;
-            customButtonRound11.Location = new Point(597, 275);
-            customButtonRound11.Margin = new Padding(3, 2, 3, 2);
-            customButtonRound11.Name = "customButtonRound11";
-            customButtonRound11.Size = new Size(152, 34);
-            customButtonRound11.TabIndex = 1;
-            customButtonRound11.Text = "Actualizar";
-            customButtonRound11.TextColor = Color.White;
-            customButtonRound11.UseVisualStyleBackColor = false;
+            bt_CitasPendientes_VerCitas.BackColor = Color.MediumSlateBlue;
+            bt_CitasPendientes_VerCitas.BackGroundColor = Color.MediumSlateBlue;
+            bt_CitasPendientes_VerCitas.BorderColor = Color.PaleVioletRed;
+            bt_CitasPendientes_VerCitas.BorderRadius = 34;
+            bt_CitasPendientes_VerCitas.BorderSize = 0;
+            bt_CitasPendientes_VerCitas.FlatAppearance.BorderSize = 0;
+            bt_CitasPendientes_VerCitas.FlatStyle = FlatStyle.Flat;
+            bt_CitasPendientes_VerCitas.ForeColor = Color.White;
+            bt_CitasPendientes_VerCitas.Location = new Point(305, 274);
+            bt_CitasPendientes_VerCitas.Margin = new Padding(3, 2, 3, 2);
+            bt_CitasPendientes_VerCitas.Name = "bt_CitasPendientes_VerCitas";
+            bt_CitasPendientes_VerCitas.Size = new Size(152, 34);
+            bt_CitasPendientes_VerCitas.TabIndex = 5;
+            bt_CitasPendientes_VerCitas.Text = "Ver Citas Pendientes";
+            bt_CitasPendientes_VerCitas.TextColor = Color.White;
+            bt_CitasPendientes_VerCitas.UseVisualStyleBackColor = false;
+            bt_CitasPendientes_VerCitas.Click += bt_CitasPendientes_VerCitas_Click;
+            // 
+            // bt_CitasVencidas_VerCitas
+            // 
+            bt_CitasVencidas_VerCitas.BackColor = Color.MediumSlateBlue;
+            bt_CitasVencidas_VerCitas.BackGroundColor = Color.MediumSlateBlue;
+            bt_CitasVencidas_VerCitas.BorderColor = Color.PaleVioletRed;
+            bt_CitasVencidas_VerCitas.BorderRadius = 34;
+            bt_CitasVencidas_VerCitas.BorderSize = 0;
+            bt_CitasVencidas_VerCitas.FlatAppearance.BorderSize = 0;
+            bt_CitasVencidas_VerCitas.FlatStyle = FlatStyle.Flat;
+            bt_CitasVencidas_VerCitas.ForeColor = Color.White;
+            bt_CitasVencidas_VerCitas.Location = new Point(473, 273);
+            bt_CitasVencidas_VerCitas.Margin = new Padding(3, 2, 3, 2);
+            bt_CitasVencidas_VerCitas.Name = "bt_CitasVencidas_VerCitas";
+            bt_CitasVencidas_VerCitas.Size = new Size(152, 34);
+            bt_CitasVencidas_VerCitas.TabIndex = 4;
+            bt_CitasVencidas_VerCitas.Text = "Ver Citas Vencidas";
+            bt_CitasVencidas_VerCitas.TextColor = Color.White;
+            bt_CitasVencidas_VerCitas.UseVisualStyleBackColor = false;
+            bt_CitasVencidas_VerCitas.Click += bt_CitasVencidas_VerCitas_Click;
+            // 
+            // btn_EliminarDato
+            // 
+            btn_EliminarDato.BackColor = Color.MediumSlateBlue;
+            btn_EliminarDato.BackGroundColor = Color.MediumSlateBlue;
+            btn_EliminarDato.BorderColor = Color.PaleVioletRed;
+            btn_EliminarDato.BorderRadius = 34;
+            btn_EliminarDato.BorderSize = 0;
+            btn_EliminarDato.FlatAppearance.BorderSize = 0;
+            btn_EliminarDato.FlatStyle = FlatStyle.Flat;
+            btn_EliminarDato.ForeColor = Color.White;
+            btn_EliminarDato.Location = new Point(646, 273);
+            btn_EliminarDato.Margin = new Padding(3, 2, 3, 2);
+            btn_EliminarDato.Name = "btn_EliminarDato";
+            btn_EliminarDato.Size = new Size(100, 34);
+            btn_EliminarDato.TabIndex = 3;
+            btn_EliminarDato.Text = "Eliminar";
+            btn_EliminarDato.TextColor = Color.White;
+            btn_EliminarDato.UseVisualStyleBackColor = false;
+            btn_EliminarDato.Click += btn_EliminarDato_Click;
+            // 
+            // btn_VerTodas_VerCitas
+            // 
+            btn_VerTodas_VerCitas.BackColor = Color.MediumSlateBlue;
+            btn_VerTodas_VerCitas.BackGroundColor = Color.MediumSlateBlue;
+            btn_VerTodas_VerCitas.BorderColor = Color.PaleVioletRed;
+            btn_VerTodas_VerCitas.BorderRadius = 34;
+            btn_VerTodas_VerCitas.BorderSize = 0;
+            btn_VerTodas_VerCitas.FlatAppearance.BorderSize = 0;
+            btn_VerTodas_VerCitas.FlatStyle = FlatStyle.Flat;
+            btn_VerTodas_VerCitas.ForeColor = Color.White;
+            btn_VerTodas_VerCitas.Location = new Point(6, 273);
+            btn_VerTodas_VerCitas.Margin = new Padding(3, 2, 3, 2);
+            btn_VerTodas_VerCitas.Name = "btn_VerTodas_VerCitas";
+            btn_VerTodas_VerCitas.Size = new Size(135, 34);
+            btn_VerTodas_VerCitas.TabIndex = 2;
+            btn_VerTodas_VerCitas.Text = "Ver Todas las Citas";
+            btn_VerTodas_VerCitas.TextColor = Color.White;
+            btn_VerTodas_VerCitas.UseVisualStyleBackColor = false;
+            btn_VerTodas_VerCitas.Click += btn_VerTodas_VerCitas_Click;
             // 
             // lv_VerCitas
             // 
             lv_VerCitas.Location = new Point(4, 3);
             lv_VerCitas.Name = "lv_VerCitas";
+            lv_VerCitas.ShowItemToolTips = true;
             lv_VerCitas.Size = new Size(745, 267);
             lv_VerCitas.TabIndex = 0;
             lv_VerCitas.UseCompatibleStateImageBehavior = false;
@@ -203,7 +268,7 @@
             date_Hora_Agendar.Name = "date_Hora_Agendar";
             date_Hora_Agendar.ShowUpDown = true;
             date_Hora_Agendar.Size = new Size(77, 23);
-            date_Hora_Agendar.TabIndex = 1;
+            date_Hora_Agendar.TabIndex = 8;
             date_Hora_Agendar.Value = new DateTime(2024, 8, 28, 19, 43, 0, 0);
             // 
             // tb_anticipo
@@ -213,7 +278,7 @@
             tb_anticipo.Location = new Point(101, 110);
             tb_anticipo.Name = "tb_anticipo";
             tb_anticipo.Size = new Size(247, 26);
-            tb_anticipo.TabIndex = 16;
+            tb_anticipo.TabIndex = 6;
             // 
             // lb_Anticipo
             // 
@@ -235,7 +300,7 @@
             tb_Altura_Agendar.Location = new Point(480, 43);
             tb_Altura_Agendar.Name = "tb_Altura_Agendar";
             tb_Altura_Agendar.Size = new Size(231, 26);
-            tb_Altura_Agendar.TabIndex = 14;
+            tb_Altura_Agendar.TabIndex = 4;
             // 
             // lbl_Altura_Agendar
             // 
@@ -259,7 +324,7 @@
             cb_Paquete_Agendar.Location = new Point(99, 74);
             cb_Paquete_Agendar.Name = "cb_Paquete_Agendar";
             cb_Paquete_Agendar.Size = new Size(249, 28);
-            cb_Paquete_Agendar.TabIndex = 12;
+            cb_Paquete_Agendar.TabIndex = 5;
             // 
             // lbl_fecha_Agendar
             // 
@@ -283,7 +348,7 @@
             date_Fecha_Agendar.Location = new Point(466, 109);
             date_Fecha_Agendar.Name = "date_Fecha_Agendar";
             date_Fecha_Agendar.Size = new Size(113, 26);
-            date_Fecha_Agendar.TabIndex = 10;
+            date_Fecha_Agendar.TabIndex = 7;
             // 
             // lbl_numeroDeTelefono_Agendar
             // 
@@ -370,7 +435,7 @@
             btn_AgendarCita_Agendar.Location = new Point(624, 273);
             btn_AgendarCita_Agendar.Name = "btn_AgendarCita_Agendar";
             btn_AgendarCita_Agendar.Size = new Size(113, 33);
-            btn_AgendarCita_Agendar.TabIndex = 1;
+            btn_AgendarCita_Agendar.TabIndex = 9;
             btn_AgendarCita_Agendar.Text = "Agendar cita";
             btn_AgendarCita_Agendar.UseVisualStyleBackColor = true;
             btn_AgendarCita_Agendar.Click += btn_AgendarCita_Agendar_Click;
@@ -398,26 +463,6 @@
             tab_menu.Size = new Size(760, 337);
             tab_menu.TabIndex = 0;
             // 
-            // btn_EliminarDato
-            // 
-            btn_EliminarDato.BackColor = Color.MediumSlateBlue;
-            btn_EliminarDato.BackGroundColor = Color.MediumSlateBlue;
-            btn_EliminarDato.BorderColor = Color.PaleVioletRed;
-            btn_EliminarDato.BorderRadius = 34;
-            btn_EliminarDato.BorderSize = 0;
-            btn_EliminarDato.FlatAppearance.BorderSize = 0;
-            btn_EliminarDato.FlatStyle = FlatStyle.Flat;
-            btn_EliminarDato.ForeColor = Color.White;
-            btn_EliminarDato.Location = new Point(282, 275);
-            btn_EliminarDato.Margin = new Padding(3, 2, 3, 2);
-            btn_EliminarDato.Name = "btn_EliminarDato";
-            btn_EliminarDato.Size = new Size(152, 34);
-            btn_EliminarDato.TabIndex = 3;
-            btn_EliminarDato.Text = "Eliminar";
-            btn_EliminarDato.TextColor = Color.White;
-            btn_EliminarDato.UseVisualStyleBackColor = false;
-            btn_EliminarDato.Click += btn_EliminarDato_Click;
-            // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -439,34 +484,36 @@
         }
 
         #endregion
-        private TabPage tab_consultarCitas;
-        private TabPage tab_citasAgendadas;
-        private TabPage tab_agendarCitas;
-        private TabControl tab_menu;
-        private Label lbl_fondo;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private Button btn_AgendarCita_Agendar;
-        private Label lbl_paquete_Agendar;
-        private Label lbl_apellidos_Agendar;
-        private Label lbl_nombre_Agendar;
-        private TextBox tb_NumeroDeTelefono_Agendar;
-        private TextBox tb_Apellidos_Agendar;
-        private TextBox tb_Nombre_Agendar;
-        private Label lbl_numeroDeTelefono_Agendar;
-        private ComboBox cb_Paquete_Agendar;
-        private Label lbl_fecha_Agendar;
-        private DateTimePicker date_Fecha_Agendar;
-        private TextBox tb_NombreCompleto_Consulta;
-        private Label lbl_NombreCompleto_Consulta;
-        private Button btn_ConsultarCita_Consultar;
-        private Label lbl_Altura_Agendar;
-        private TextBox tb_Altura_Agendar;
-        private TextBox tb_anticipo;
-        private Label lb_Anticipo;
+        internal TabPage tab_consultarCitas;
+        internal TabPage tab_citasAgendadas;
+        internal TabPage tab_agendarCitas;
+        internal TabControl tab_menu;
+        internal Label lbl_fondo;
+        internal System.ComponentModel.BackgroundWorker backgroundWorker1;
+        internal Button btn_AgendarCita_Agendar;
+        internal Label lbl_paquete_Agendar;
+        internal Label lbl_apellidos_Agendar;
+        internal Label lbl_nombre_Agendar;
+        internal TextBox tb_NumeroDeTelefono_Agendar;
+        internal TextBox tb_Apellidos_Agendar;
+        internal TextBox tb_Nombre_Agendar;
+        internal Label lbl_numeroDeTelefono_Agendar;
+        internal ComboBox cb_Paquete_Agendar;
+        internal Label lbl_fecha_Agendar;
+        internal DateTimePicker date_Fecha_Agendar;
+        internal TextBox tb_NombreCompleto_Consulta;
+        internal Label lbl_NombreCompleto_Consulta;
+        internal Button btn_ConsultarCita_Consultar;
+        internal Label lbl_Altura_Agendar;
+        internal TextBox tb_Altura_Agendar;
+        internal TextBox tb_anticipo;
+        internal Label lb_Anticipo;
         public ListView lv_VerCitas;
-        private Customs.CustomButtonRound1 customButtonRound11;
-        private DateTimePicker date_Hora_Agendar;
-        private Customs.CustomButtonRound1 btn_CargarDatos;
-        private Customs.CustomButtonRound1 btn_EliminarDato;
+        internal DateTimePicker date_Hora_Agendar;
+        internal Customs.CustomButtonRound1 btn_VerTodas_VerCitas;
+        internal Customs.CustomButtonRound1 btn_EliminarDato;
+        internal Customs.CustomButtonRound1 bt_CitasVencidas_VerCitas;
+        internal Customs.CustomButtonRound1 bt_CitasdelDia_VerCitas;
+        internal Customs.CustomButtonRound1 bt_CitasPendientes_VerCitas;
     }
 }

@@ -1,35 +1,102 @@
--- Insertar Paquetes de Fotografias
-INSERT INTO servicio (NombreServicio, Precio) 
-    VALUES 
-            ('Paquete 1', 1000.00),
-            ('Paquete 2', 1200.00),
-            ('Paquete 3', 1500.00);
+## -------------------------------------------------------------------------------------------------
+## ---------------------- CONSULTAS ----------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------
+select * from citas;
 
--- Ver tabla de Servicios (Paquetes)
-Select * from servicio;
+select * from clientes;
 
--- Agrergar un Cliente y Cita a la Vez
-CALL add_clientecita(
-    'Pedro', 
-    'Lozano', 
-    'Gamez', 
-    '555-1234', 
-    1.75, 
-    '2024-09-25 10:00:00', 
-    1, 
-    150.00, 
-    '2024-09-25 10:30:00', 
-    'Efectivo'
-);
+select * from servicio;
 
--- Ver Tabla de Pagos
-select * from pago
+SELECT * FROM view_ver_citas;
 
--- Ver Lista de Clientes
-select * from view_nombre_telefono;
+## Ver Todas las Citas
+SELECT CitaID, ClienteID, FechaAgendada, HoraAgendada, ServicioID, Pago, EstadoCita FROM citas;
 
--- Ver Tabla de Clientes
-select * from cliente;
 
--- Ver Citas
-select * from view_citas_pendientes
+
+## -------------------------------------------------------------------------------------------------
+## ---------------------- Pruebas de Inserción -----------------------------------------------------
+## -------------------------------------------------------------------------------------------------
+
+## -------------------------------------------------------------------------------------------------
+## ---------------------- CREACIÓN DE LA LIST VIEW PARA CONSULTAS ----------------------------------
+## -------------------------------------------------------------------------------------------------
+## PARA VER TODAS LAS CITAS
+CREATE VIEW view_Ver_Citas AS
+SELECT 
+    c.CitaID,
+    cl.Nombre,
+    cl.Apellido_paterno,
+    cl.Apellido_materno,
+    c.FechaAgendada,
+    s.NombreServicio
+FROM 
+    citas c
+JOIN 
+    clientes cl ON c.ClienteID = cl.ClienteID
+JOIN 
+    servicio s ON c.ServicioID = s.ServicioID
+    ;
+
+## PARA VER CITAS DEL DÍA
+CREATE OR REPLACE VIEW view_ver_citas_hoy AS
+SELECT 
+    c.CitaID,
+    cl.Nombre,
+    cl.Apellido_paterno,
+    cl.Apellido_materno,
+    c.FechaAgendada,
+    c.HoraAgendada,
+    s.NombreServicio,
+    c.EstadoCita
+FROM 
+    citas c
+JOIN 
+    clientes cl ON c.ClienteID = cl.ClienteID
+JOIN 
+    servicio s ON c.ServicioID = s.ServicioID
+WHERE 
+    DATE(c.FechaAgendada) = CURDATE();
+
+## PARA VER CITAS PENDIENTES
+CREATE OR REPLACE VIEW view_ver_citas_pendientes AS
+SELECT 
+    c.CitaID,
+    cl.Nombre,
+    cl.Apellido_paterno,
+    cl.Apellido_materno,
+    c.FechaAgendada,
+    c.HoraAgendada,
+    s.NombreServicio,
+    c.EstadoCita
+FROM 
+    citas c
+JOIN 
+    clientes cl ON c.ClienteID = cl.ClienteID
+JOIN 
+    servicio s ON c.ServicioID = s.ServicioID
+WHERE 
+    c.EstadoCita = 'Pendiente';
+
+## PARA VER CITAS VENCIDAS
+CREATE OR REPLACE VIEW view_ver_citas_vencidas AS
+SELECT 
+    c.CitaID,
+    cl.Nombre,
+    cl.Apellido_paterno,
+    cl.Apellido_materno,
+    c.FechaAgendada,
+    c.HoraAgendada,
+    s.NombreServicio,
+    c.EstadoCita
+FROM 
+    citas c
+JOIN 
+    clientes cl ON c.ClienteID = cl.ClienteID
+JOIN 
+    servicio s ON c.ServicioID = s.ServicioID
+WHERE 
+    c.FechaAgendada < CURDATE() 
+    AND c.EstadoCita != 'Completado';
+
+## -------------------------------------------------------------------------------------------------
