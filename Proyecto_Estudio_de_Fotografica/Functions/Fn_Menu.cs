@@ -10,9 +10,5 @@ namespace Proyecto_Estudio_de_Fotografica.Functions {
         public static bool No_esta_Vacio(string dato) {
             return !string.IsNullOrWhiteSpace(dato);
         }
-
-
-
-        
     }
 }
