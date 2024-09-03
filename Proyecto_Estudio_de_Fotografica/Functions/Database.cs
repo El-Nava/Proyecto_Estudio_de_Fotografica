@@ -110,6 +110,29 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
 
             return resultado;
         }
+
+        public static bool ExisteCita(string fecha, string hora)
+        {
+            bool citaExiste = false;
+            string query = "SELECT COUNT(*) FROM Citas WHERE FechaAgendada = @fecha AND HoraAgendada = @hora";
+
+            using (MySqlConnection connection = Abrir_Conexion())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("@fecha", fecha);
+                    cmd.Parameters.AddWithValue("@hora", hora);
+
+                    //connection.Open();
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    citaExiste = (count > 0);
+                }
+            }
+            return citaExiste;
+        }
+
+
+
         // --------------------- Sección de Ver Citas Agendadas ------------------------------
 
     }

@@ -1,11 +1,14 @@
 ﻿using MySql.Data.MySqlClient;
 using Proyecto_Estudio_de_Fotografica.Functions;
 
-namespace Proyecto_Estudio_de_Fotografica{
-    public partial class Menu : Form {
+namespace Proyecto_Estudio_de_Fotografica
+{
+    public partial class Menu : Form
+    {
 
         private readonly Fn_VerCitas fn_vercitas;
-        public Menu() {
+        public Menu()
+        {
             InitializeComponent();
             MaximizeBox = false;
 
@@ -16,18 +19,19 @@ namespace Proyecto_Estudio_de_Fotografica{
             // Crea Conexión a Base de Datos
             Database.Abrir_Conexion();
             LoadPaquetes(null, EventArgs.Empty);
-
-
         }
 
-        private void btn_AgendarCita_Agendar_Click(object sender, EventArgs e) {
+        private void btn_AgendarCita_Agendar_Click(object sender, EventArgs e)
+        {
             // Crear lista para comprobar campos
             TextBox[] campos = { tb_Nombre_Agendar, tb_Apellidos_Agendar, tb_NumeroDeTelefono_Agendar };
 
-            if (campos.Any(campo => !Fn_Menu.No_esta_Vacio(campo.Text))) {
+            if (campos.Any(campo => !Fn_Menu.No_esta_Vacio(campo.Text)))
+            {
                 MessageBox.Show("Dato Faltante", "Ingrese todos los Datos");
             }
-            else {
+            else
+            {
                 // Separar Apellidos
                 string[] Separar_Apellidos = tb_Apellidos_Agendar.Text.Split(' ');
                 string Apellido_Paterno = Separar_Apellidos.Length > 0 ? Separar_Apellidos[0] : string.Empty;
@@ -35,7 +39,8 @@ namespace Proyecto_Estudio_de_Fotografica{
 
                 // Obtener el valor seleccionado del ComboBox
                 var paqueteSeleccionado = cb_Paquete_Agendar.SelectedValue;
-                if (paqueteSeleccionado != null) {
+                if (paqueteSeleccionado != null)
+                {
                     float altura;
                     float anticipo;
 
@@ -43,24 +48,38 @@ namespace Proyecto_Estudio_de_Fotografica{
                     bool alturaValida = float.TryParse(tb_Altura_Agendar.Text, out altura);
                     bool anticipoValido = float.TryParse(tb_anticipo.Text, out anticipo);
                     MessageBox.Show(date_Hora_Agendar.Text);
-                    if (alturaValida && anticipoValido) {
-                        Database.Agregar_Cliente(
-                            tb_Nombre_Agendar.Text,  // Cambiado a Text en lugar de ToString()
-                            Apellido_Paterno,
-                            Apellido_Materno,
-                            tb_NumeroDeTelefono_Agendar.Text,  // Cambiado a Text en lugar de ToString()
-                            altura,
-                            date_Fecha_Agendar.Text,  // Usado Value en lugar de DateTimePicker
-                            date_Hora_Agendar.Text,
-                            Convert.ToInt32(paqueteSeleccionado),
-                            anticipo
-                        );
+                    if (alturaValida && anticipoValido)
+                    {
+                        string fecha = date_Fecha_Agendar.Text; // Usar Value para obtener la fecha
+                        string hora = date_Hora_Agendar.Text; // Usar Value para obtener la hora
+
+                        // Verificar si ya existe una cita en la misma fecha y hora
+                        if (!Database.ExisteCita(fecha, hora))
+                        {
+                            Database.Agregar_Cliente(
+                                tb_Nombre_Agendar.Text,  // Cambiado a Text en lugar de ToString()
+                                Apellido_Paterno,
+                                Apellido_Materno,
+                                tb_NumeroDeTelefono_Agendar.Text,  // Cambiado a Text en lugar de ToString()
+                                altura,
+                                fecha,
+                                hora,
+                                Convert.ToInt32(paqueteSeleccionado),
+                                anticipo
+                            );
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ya existe una cita programada en esta fecha y hora. Por favor, elija otra.");
+                        }
                     }
-                    else {
+                    else
+                    {
                         MessageBox.Show("Por favor, ingrese valores válidos para altura y anticipo.");
                     }
                 }
-                else {
+                else
+                {
                     MessageBox.Show("Por favor, seleccione un paquete.");
                 }
             }
@@ -69,7 +88,8 @@ namespace Proyecto_Estudio_de_Fotografica{
             Fn_Menu.LimpiarCampos(this);
         }
 
-        private void LoadPaquetes(object? sender, EventArgs e) {
+        private void LoadPaquetes(object? sender, EventArgs e)
+        {
             var datos = Database.Servicios();
 
             cb_Paquete_Agendar.DisplayMember = "Value";
@@ -78,13 +98,16 @@ namespace Proyecto_Estudio_de_Fotografica{
         }
 
         // ------------------ Proceso de Pestaña de "Ver Citas Agendadas" -----------------------------
-        private void lv_VerCitas_SelectedIndexChanged(object sender, EventArgs e) {
+        private void lv_VerCitas_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 
-        private void btn_EliminarDato_Click(object sender, EventArgs e) {
+        private void btn_EliminarDato_Click(object sender, EventArgs e)
+        {
             // Verifica si hay un elemento seleccionado en el ListView
-            if (lv_VerCitas.SelectedItems.Count > 0) {
+            if (lv_VerCitas.SelectedItems.Count > 0)
+            {
                 // Obtén el ID de la cita seleccionada (asumiendo que es la primera columna)
                 string citaID = lv_VerCitas.SelectedItems[0].Text;
 
@@ -92,7 +115,8 @@ namespace Proyecto_Estudio_de_Fotografica{
                 var confirmResult = MessageBox.Show("¿Estás seguro de que deseas eliminar esta cita?",
                                                     "Confirmar Eliminación",
                                                     MessageBoxButtons.YesNo);
-                if (confirmResult == DialogResult.Yes) {
+                if (confirmResult == DialogResult.Yes)
+                {
                     // Llama al método para eliminar la cita de la base de datos
                     EliminarDato(citaID);
 
@@ -100,14 +124,18 @@ namespace Proyecto_Estudio_de_Fotografica{
                     fn_vercitas.CargarBaseDeDatos(1);
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("Por favor, selecciona una cita para eliminar.");
             }
         }
 
-        private static void EliminarDato(string citaID) {
-            using (MySqlConnection conn = Database.Abrir_Conexion()) {
-                if (conn == null) {
+        private static void EliminarDato(string citaID)
+        {
+            using (MySqlConnection conn = Database.Abrir_Conexion())
+            {
+                if (conn == null)
+                {
                     MessageBox.Show("No se pudo establecer una conexión a la base de datos.");
                     return;
                 }
@@ -116,31 +144,37 @@ namespace Proyecto_Estudio_de_Fotografica{
                 MySqlCommand cmd = new(query, conn);
                 cmd.Parameters.AddWithValue("@CitaID", citaID);
 
-                try {
+                try
+                {
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Cita eliminada exitosamente.");
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     MessageBox.Show("Error al eliminar la cita: " + ex.Message);
                 }
             }
         }
 
-        private void btn_VerTodas_VerCitas_Click(object sender, EventArgs e) {
+        private void btn_VerTodas_VerCitas_Click(object sender, EventArgs e)
+        {
             fn_vercitas.CargarBaseDeDatos(1);
         }
 
-        private void bt_CitasVencidas_VerCitas_Click(object sender, EventArgs e) {
+        private void bt_CitasVencidas_VerCitas_Click(object sender, EventArgs e)
+        {
             lv_VerCitas.Items.Clear();
             fn_vercitas.CargarBaseDeDatos(2);
         }
 
-        private void bt_CitasdelDia_VerCitas_Click(object sender, EventArgs e) {
+        private void bt_CitasdelDia_VerCitas_Click(object sender, EventArgs e)
+        {
             lv_VerCitas.Items.Clear();
             fn_vercitas.CargarBaseDeDatos(3);
         }
 
-        private void bt_CitasPendientes_VerCitas_Click(object sender, EventArgs e) {
+        private void bt_CitasPendientes_VerCitas_Click(object sender, EventArgs e)
+        {
             lv_VerCitas.Items.Clear();
             fn_vercitas.CargarBaseDeDatos(4);
         }
