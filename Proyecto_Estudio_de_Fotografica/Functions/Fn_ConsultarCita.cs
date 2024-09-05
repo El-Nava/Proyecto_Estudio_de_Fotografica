@@ -1,19 +1,21 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Proyecto_Estudio_de_Fotografica.Functions
 {
-    internal class Fn_VerCitas
+    internal class Fn_ConsultarCita
     {
         private Menu _menuInstance;
 
-        public Fn_VerCitas(Menu menuInstance)
+        public Fn_ConsultarCita(Menu menuInstance)
         {
             _menuInstance = menuInstance;
         }
-
-        public void CargarBaseDeDatos(int opcion)
+        public void CargarConsulta()
         {
             // Reutiliza la conexión de la clase Database
             using (MySqlConnection conn = Database.Abrir_Conexion())
@@ -25,26 +27,6 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
                 }
 
                 string query;
-
-                // FALTA CORREGIR (El Lunes le doy)
-                // Seleccionar la consulta SQL según la opción
-                switch (opcion) {
-                    case 1: //Ver Todas las Citas
-                        query = "SELECT * FROM View_Todascitas;";
-                        break;
-                    case 2: // Ver Citas Vencidas
-                        query = "select * from view_citasvencidas";
-                        break;
-                    case 3: // Ver Citas del Día
-                        query = "SELECT * FROM view_citashoy";
-                        break;
-                    case 4: // Ver Citas Pendientes
-                        query = "select * from view_citaspendientes;";
-                        break;
-                    default:
-                        MessageBox.Show("Opción inválida.");
-                        return;
-                }
 
                 MySqlCommand cmd = new(query, conn);
 

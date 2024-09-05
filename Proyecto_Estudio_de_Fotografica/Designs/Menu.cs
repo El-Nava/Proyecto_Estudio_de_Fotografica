@@ -47,7 +47,6 @@ namespace Proyecto_Estudio_de_Fotografica
                     // Intentar convertir los valores de los TextBox a float
                     bool alturaValida = float.TryParse(tb_Altura_Agendar.Text, out altura);
                     bool anticipoValido = float.TryParse(tb_anticipo.Text, out anticipo);
-                    MessageBox.Show(date_Hora_Agendar.Text);
                     if (alturaValida && anticipoValido)
                     {
                         string fecha = date_Fecha_Agendar.Text; // Usar Value para obtener la fecha
@@ -130,7 +129,7 @@ namespace Proyecto_Estudio_de_Fotografica
             }
         }
 
-        private static void EliminarDato(string citaID)
+        private static void EliminarDato(string clienteID)
         {
             using (MySqlConnection conn = Database.Abrir_Conexion())
             {
@@ -140,21 +139,26 @@ namespace Proyecto_Estudio_de_Fotografica
                     return;
                 }
 
-                string query = "DELETE FROM citas WHERE CitaID = @CitaID";
+                // Asegúrate de que el nombre del procedimiento coincida con el que tienes en la base de datos
+                string query = "CALL Eliminarcliente(@ClienteID)";
                 MySqlCommand cmd = new(query, conn);
-                cmd.Parameters.AddWithValue("@CitaID", citaID);
+
+                // Asigna el parámetro al comando
+                cmd.Parameters.AddWithValue("@ClienteID", clienteID);
 
                 try
                 {
+                    // Ejecuta el comando
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Cita eliminada exitosamente.");
+                    MessageBox.Show("Citas del cliente eliminadas exitosamente.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al eliminar la cita: " + ex.Message);
+                    MessageBox.Show("Error al eliminar las citas: " + ex.Message);
                 }
             }
         }
+
 
         private void btn_VerTodas_VerCitas_Click(object sender, EventArgs e)
         {

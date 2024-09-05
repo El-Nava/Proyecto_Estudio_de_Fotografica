@@ -14,6 +14,7 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
             "Server=localhost;Database=uninstante;User ID=root;Password='20200321a';"//Conexion Diego
         };
 
+
         public static MySqlConnection Abrir_Conexion()
         {
 
@@ -26,6 +27,8 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
                     connection = new MySqlConnection(connectionString);
                     connection.Open();
                     Console.WriteLine($"Conexión exitosa con: {connection.DataSource}");
+                    // Llama a la función que actualiza el estado de las citas
+                    ActualizarEstadoCitas(connection);
                     return connection;
                 }
                 catch (MySqlException ex)
@@ -37,6 +40,25 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
             return null!;
         }
 
+        public static void ActualizarEstadoCitas(MySqlConnection connection)
+        {
+            try
+            {
+                using (MySqlCommand command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;CALL actualizar_estado_citas();SET SQL_SAFE_UPDATES = 1;", connection))
+                {
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    // Ejecuta el procedimiento almacenado
+                    command.ExecuteNonQuery();
+
+                    Console.WriteLine("Procedimiento almacenado ejecutado exitosamente.");
+                }
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Error al ejecutar el procedimiento almacenado: " + ex.Message);
+            }
+        }
         public static void Agregar_Cliente(
             string nombre,
             string apellidoPaterno,
@@ -111,25 +133,41 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
             return resultado;
         }
 
+        
         public static bool ExisteCita(string fecha, string hora)
         {
             bool citaExiste = false;
-            string query = "SELECT COUNT(*) FROM Citas WHERE FechaAgendada = @fecha AND HoraAgendada = @hora";
 
             using (MySqlConnection connection = Abrir_Conexion())
             {
-                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                using (MySqlCommand cmd = new MySqlCommand("Citasrepetidas", connection))
                 {
+                    // Especificar que es un procedimiento almacenado
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Agregar parámetros de entrada
                     cmd.Parameters.AddWithValue("@fecha", fecha);
                     cmd.Parameters.AddWithValue("@hora", hora);
 
-                    //connection.Open();
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    // Agregar parámetro de salida
+                    MySqlParameter outputParam = new MySqlParameter("@totalCitas", MySqlDbType.Int32)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(outputParam);
+
+                    // Ejecutar el procedimiento almacenado
+                    cmd.ExecuteNonQuery();
+
+                    // Obtener el valor del parámetro de salida
+                    int count = Convert.ToInt32(outputParam.Value);
                     citaExiste = (count > 0);
                 }
             }
+
             return citaExiste;
         }
+
 
 
 
