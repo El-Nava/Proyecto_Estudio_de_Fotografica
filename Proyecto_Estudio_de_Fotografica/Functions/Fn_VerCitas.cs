@@ -24,9 +24,8 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
                     return;
                 }
 
-                string query;
+                string query ="";
 
-                // FALTA CORREGIR (El Lunes le doy)
                 // Seleccionar la consulta SQL según la opción
                 switch (opcion) {
                     case 1: //Ver Todas las Citas

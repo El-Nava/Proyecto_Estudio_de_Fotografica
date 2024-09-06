@@ -46,7 +46,7 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
             {
                 using (MySqlCommand command = new MySqlCommand("SET SQL_SAFE_UPDATES = 0;CALL actualizar_estado_citas();SET SQL_SAFE_UPDATES = 1;", connection))
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.CommandType = System.Data.CommandType.Text;
 
                     // Ejecuta el procedimiento almacenado
                     command.ExecuteNonQuery();
