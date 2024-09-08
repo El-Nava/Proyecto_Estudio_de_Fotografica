@@ -276,7 +276,10 @@
             // 
             // lv_VerCitas
             // 
+            lv_VerCitas.AllowColumnReorder = true;
             lv_VerCitas.Columns.AddRange(new ColumnHeader[] { CitaID, Clientes, Fecha, Hora, Pago, Servicio, Estadocita });
+            lv_VerCitas.FullRowSelect = true;
+            lv_VerCitas.GridLines = true;
             lv_VerCitas.Location = new Point(4, 3);
             lv_VerCitas.Name = "lv_VerCitas";
             lv_VerCitas.ShowItemToolTips = true;
@@ -284,6 +287,7 @@
             lv_VerCitas.TabIndex = 0;
             lv_VerCitas.UseCompatibleStateImageBehavior = false;
             lv_VerCitas.View = View.Details;
+            lv_VerCitas.ColumnClick += lv_VerCitas_ColumnClick;
             lv_VerCitas.SelectedIndexChanged += lv_VerCitas_SelectedIndexChanged;
             // 
             // CitaID
@@ -390,6 +394,7 @@
             tb_anticipo.Name = "tb_anticipo";
             tb_anticipo.Size = new Size(247, 26);
             tb_anticipo.TabIndex = 6;
+            tb_anticipo.KeyPress += tb_anticipo_KeyPress;
             // 
             // lb_Anticipo
             // 
@@ -412,6 +417,7 @@
             tb_Altura_Agendar.Name = "tb_Altura_Agendar";
             tb_Altura_Agendar.Size = new Size(94, 26);
             tb_Altura_Agendar.TabIndex = 4;
+            tb_Altura_Agendar.KeyPress += tb_Altura_Agendar_KeyPress;
             // 
             // lbl_Altura_Agendar
             // 
@@ -521,6 +527,7 @@
             tb_NumeroDeTelefono_Agendar.Name = "tb_NumeroDeTelefono_Agendar";
             tb_NumeroDeTelefono_Agendar.Size = new Size(249, 26);
             tb_NumeroDeTelefono_Agendar.TabIndex = 3;
+            tb_NumeroDeTelefono_Agendar.KeyPress += tb_NumeroDeTelefono_Agendar_KeyPress;
             // 
             // tb_Apellidos_Agendar
             // 
@@ -637,7 +644,7 @@
         private ColumnHeader Estadocita;
         private ColumnHeader CitaID;
         private Label lb_citas;
-        private ListView lv_CitasCliente;
+        internal ListView lv_CitasCliente;
         private ColumnHeader FechaAgendada;
         private ColumnHeader HoraAgendada;
         private ColumnHeader EstadoAgendada;

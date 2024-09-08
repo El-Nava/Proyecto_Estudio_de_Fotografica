@@ -15,52 +15,50 @@ namespace Proyecto_Estudio_de_Fotografica.Functions {
         }
 
         public void Consultar_Citas(string Nombre_Completo) {
-            // Reutiliza la conexión de la clase Database
             using (MySqlConnection conn = Database.Abrir_Conexion()) {
-
-
                 if (conn == null) {
                     MessageBox.Show("No se pudo establecer una conexión a la base de datos.");
                     return;
                 }
 
-                // Consulta SQL para buscar las citas por nombre completo
-                string query = "SELECT CitaID, NombreCompletoCliente, FechaAgendada, HoraAgendada, ServicioID, Pago, EstadoCita " +
-                               "FROM citas WHERE NombreCompletoCliente LIKE @NombreCompleto";
-
-                MySqlCommand cmd = new(query, conn);
-                cmd.Parameters.AddWithValue("@NombreCompleto", "%" + Nombre_Completo + "%");
-
                 try {
-                    MySqlDataReader reader = cmd.ExecuteReader();
+                    // Primero obtenemos el cliente_id basado en el nombre completo
+                    string queryClienteId =
+                        "SELECT ClienteID FROM clientes WHERE CONCAT" +
+                        "(Nombre,' ', Apellido_paterno,' ', Apellido_materno) = @NombreCompleto";
+                    MySqlCommand cmdClienteId = new(queryClienteId, conn);
+                    cmdClienteId.Parameters.AddWithValue("@NombreCompleto", Nombre_Completo);
 
-                    // Acceder al ListView desde _Menu_Instancia
-                    ListView lv_VerCitas = _Menu_Instancia.lv_VerCitas;
+                    object result = cmdClienteId.ExecuteScalar();
+                    if (result == null) {
+                        MessageBox.Show("Cliente no encontrado.");
+                        return;
+                    }
+                    int clienteId = Convert.ToInt32(result);
 
-                    // Limpiar elementos y columnas existentes
-                    lv_VerCitas.Items.Clear();
+                    // Luego, usamos el cliente_id para buscar las citas
+                    string queryCitas = "SELECT * FROM citas WHERE ClienteID = @ClienteID";
+                    MySqlCommand cmdCitas = new(queryCitas, conn);
+                    cmdCitas.Parameters.AddWithValue("@ClienteID", clienteId);
 
-                    // Leer datos del MySqlDataReader y agregarlos al ListView
+                    MySqlDataReader reader = cmdCitas.ExecuteReader();
+
+                    // Aquí accedemos al ListView y cargamos las citas (como ya lo haces)
+                    ListView lv_CitasCliente = _Menu_Instancia.lv_CitasCliente;
+                    lv_CitasCliente.Items.Clear();
+
                     while (reader.Read()) {
-                        // Crear un nuevo ListViewItem con el primer dato (CitaID)
-                        ListViewItem item = new ListViewItem(reader["CitaID"].ToString());
-
-                        // Añadir los subitems (el resto de los datos)
-                        item.SubItems.Add(reader["NombreCompletoCliente"].ToString());
-                        item.SubItems.Add(reader["FechaAgendada"].ToString());
+                        ListViewItem item = new(reader["FechaAgendada"].ToString());
                         item.SubItems.Add(reader["HoraAgendada"].ToString());
-                        item.SubItems.Add(reader["ServicioID"].ToString());
-                        item.SubItems.Add(reader["Pago"].ToString());
                         item.SubItems.Add(reader["EstadoCita"].ToString());
 
-                        // Añadir el item completo al ListView
-                        lv_VerCitas.Items.Add(item);
+                        lv_CitasCliente.Items.Add(item);
                     }
 
-                    reader.Close(); // Cierra el reader después de completar la lectura
+                    reader.Close();
                 }
                 catch (Exception ex) {
-                    MessageBox.Show("Error al consultar las citas: " + ex.Message);
+                    MessageBox.Show("Error al cargar citas: " + ex.Message);
                 }
             }
         }

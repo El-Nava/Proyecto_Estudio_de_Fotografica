@@ -1,5 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using Proyecto_Estudio_de_Fotografica.Functions;
+using System.Collections;
+using System.Windows.Forms;
+
 
 namespace Proyecto_Estudio_de_Fotografica
 {
@@ -163,12 +166,13 @@ namespace Proyecto_Estudio_de_Fotografica
 
 
         // ------------------------- Proceso de Pestaña "Consultar Citas" ----------------------
-        private void btn_ConsultarCita_Consultar_Click(object sender, EventArgs e) {
+        public void btn_ConsultarCita_Consultar_Click(object sender, EventArgs e) {
             Fn_ConsultarCita _Consulta = new(this);
+            _Consulta.Consultar_Citas(tb_NombreCompleto_Consulta.Text);
         }
 
 
-
+        // --------------------- PROCESO DE COMPROBACIÓN ----------------------------------------
         // Aplicar Mayusculas al Escribir
         public static void Mayus(TextBox sender) {
             // Establecer el texto siempre en mayúsculas
@@ -189,5 +193,81 @@ namespace Proyecto_Estudio_de_Fotografica
         private void tb_NombreCompleto_Consulta_TextChanged(object sender, EventArgs e) {
             Mayus(tb_NombreCompleto_Consulta);
         }
+
+        // Key Press para solo Admitir Números en Cel
+        private void tb_NumeroDeTelefono_Agendar_KeyPress(object sender, KeyPressEventArgs e) {
+            // Verifica si el carácter presionado es un número o una tecla de control (como Backspace)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar)) {
+                // Si no es número ni control, cancela el evento (evita que se escriba)
+                e.Handled = true;
+            }
+        }
+
+        private void tb_Altura_Agendar_KeyPress(object sender, KeyPressEventArgs e) {
+            // Verifica si el carácter es un dígito, backspace o los separadores permitidos (punto o coma)
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '.' && e.KeyChar != ',') {
+                e.Handled = true;
+            }
+
+            // Asegura que solo haya un separador (punto o coma)
+            if ((e.KeyChar == '.' || e.KeyChar == ',') &&
+                ((sender as TextBox).Text.Contains('.') || (sender as TextBox).Text.Contains(','))) {
+                e.Handled = true;
+            }
+        }
+
+        private void tb_anticipo_KeyPress(object sender, KeyPressEventArgs e) {
+            // Verifica si el carácter es un número (controla números del 0 al 9)
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.' && !char.IsControl(e.KeyChar)) {
+                e.Handled = true; // Bloquea el carácter si no es número, punto o tecla de control (como borrar)
+            }
+
+            // Permite un solo punto decimal
+            if (e.KeyChar == '.' && (sender as TextBox).Text.Contains(".")) {
+                e.Handled = true; // Si ya hay un punto en el texto, bloquea cualquier otro
+            }
+        }
+
+        // ----------------- ORGANIZAR ITEMS DE VER CITAS COMO SE DESEE --------------------------
+        private SortOrder sortOrder = SortOrder.None;
+        private int sortColumn = -1;
+        private void lv_VerCitas_ColumnClick(object sender, ColumnClickEventArgs e) {
+            // Si la columna es la misma, alternar el orden
+            if (e.Column == sortColumn) {
+                sortOrder = (sortOrder == SortOrder.Ascending) ? SortOrder.Descending : SortOrder.Ascending;
+            }
+            else {
+                // Si es una columna diferente, por defecto ordenar ascendente
+                sortColumn = e.Column;
+                sortOrder = SortOrder.Ascending;
+            }
+
+            // Asignar el nuevo comparador al ListView
+            lv_VerCitas.ListViewItemSorter = new ListViewItemComparer(e.Column, sortOrder);
+        }
+    }
+}
+
+public class ListViewItemComparer : IComparer {
+    private int col; // Columna que será comparada
+    private SortOrder order; // Orden ascendente o descendente
+
+    // Constructor que toma la columna a comparar y el orden
+    public ListViewItemComparer(int column, SortOrder order) {
+        col = column;
+        this.order = order;
+    }
+
+    // Implementación del método Compare para la interfaz IComparer
+    public int Compare(object x, object y) {
+        int returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text,
+                                       ((ListViewItem)y).SubItems[col].Text);
+
+        // Si el orden es descendente, invierte el valor de comparación
+        if (order == SortOrder.Descending) {
+            returnVal *= -1;
+        }
+
+        return returnVal;
     }
 }
