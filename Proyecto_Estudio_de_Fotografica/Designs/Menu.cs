@@ -39,7 +39,7 @@ namespace Proyecto_Estudio_de_Fotografica
                 var paqueteSeleccionado = cb_Paquete_Agendar.SelectedValue;
                 if (paqueteSeleccionado != null) {
                     float altura;
-                    float anticipo;
+                    float anticipo; 
 
                     // Intentar convertir los valores de los TextBox a float
                     bool alturaValida = float.TryParse(tb_Altura_Agendar.Text, out altura);

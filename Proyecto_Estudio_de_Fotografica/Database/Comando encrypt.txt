@@ -1,0 +1,32 @@
+en program
+namespace Proyecto_Estudio_de_Fotografica.Functions
+{
+    internal static class Program
+    {
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            // Agregar usuario y contraseña por defecto
+            string usuarioPorDefecto = "usuario";
+            string passPorDefecto = "passcon";
+
+            bool resultado = Fn_Login.AgregarUsuario(usuarioPorDefecto, passPorDefecto);
+
+            if (resultado)
+            {
+                Console.WriteLine("Usuario por defecto guardado exitosamente.");
+            }
+            else
+            {
+                Console.WriteLine("El usuario por defecto ya existe o no se pudo guardar.");
+            }
+
+            // Inicializar configuración de la aplicación
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Login());
+        }
+    }
+}

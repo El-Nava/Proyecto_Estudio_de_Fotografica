@@ -8,8 +8,10 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            // Agregar usuario y contraseña por defecto
+           
+
+            // Inicializar configuración de la aplicación
             ApplicationConfiguration.Initialize();
             Application.Run(new Login());
         }
