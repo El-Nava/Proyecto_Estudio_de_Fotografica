@@ -26,8 +26,10 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             tab_consultarCitas = new TabPage();
+            label2 = new Label();
             lb_citas = new Label();
             lv_CitasCliente = new ListView();
             FechaAgendada = new ColumnHeader();
@@ -80,6 +82,7 @@
             // tab_consultarCitas
             // 
             tab_consultarCitas.BackColor = Color.LightGray;
+            tab_consultarCitas.Controls.Add(label2);
             tab_consultarCitas.Controls.Add(lb_citas);
             tab_consultarCitas.Controls.Add(lv_CitasCliente);
             tab_consultarCitas.Controls.Add(btn_ConsultarCita_Consultar);
@@ -91,6 +94,15 @@
             tab_consultarCitas.Size = new Size(752, 309);
             tab_consultarCitas.TabIndex = 2;
             tab_consultarCitas.Text = "Consultar Citas";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(194, 40);
+            label2.Name = "label2";
+            label2.Size = new Size(490, 15);
+            label2.TabIndex = 12;
+            label2.Text = "Nota:  Si solo se ingreso un apellido entonces poner un espacio despues del primer apellido ";
             // 
             // lb_citas
             // 
@@ -107,7 +119,7 @@
             lv_CitasCliente.Location = new Point(13, 70);
             lv_CitasCliente.Margin = new Padding(3, 2, 3, 2);
             lv_CitasCliente.Name = "lv_CitasCliente";
-            lv_CitasCliente.Size = new Size(257, 234);
+            lv_CitasCliente.Size = new Size(244, 234);
             lv_CitasCliente.TabIndex = 10;
             lv_CitasCliente.UseCompatibleStateImageBehavior = false;
             lv_CitasCliente.View = View.Details;
@@ -176,8 +188,8 @@
             // 
             // bt_CitasdelDia_VerCitas
             // 
-            bt_CitasdelDia_VerCitas.BackColor = Color.MediumSlateBlue;
-            bt_CitasdelDia_VerCitas.BackGroundColor = Color.MediumSlateBlue;
+            bt_CitasdelDia_VerCitas.BackColor = Color.Magenta;
+            bt_CitasdelDia_VerCitas.BackGroundColor = Color.Magenta;
             bt_CitasdelDia_VerCitas.BorderColor = Color.PaleVioletRed;
             bt_CitasdelDia_VerCitas.BorderRadius = 34;
             bt_CitasdelDia_VerCitas.BorderSize = 0;
@@ -204,7 +216,7 @@
             bt_CitasPendientes_VerCitas.FlatAppearance.BorderSize = 0;
             bt_CitasPendientes_VerCitas.FlatStyle = FlatStyle.Flat;
             bt_CitasPendientes_VerCitas.ForeColor = Color.White;
-            bt_CitasPendientes_VerCitas.Location = new Point(305, 274);
+            bt_CitasPendientes_VerCitas.Location = new Point(308, 273);
             bt_CitasPendientes_VerCitas.Margin = new Padding(3, 2, 3, 2);
             bt_CitasPendientes_VerCitas.Name = "bt_CitasPendientes_VerCitas";
             bt_CitasPendientes_VerCitas.Size = new Size(152, 34);
@@ -244,7 +256,7 @@
             btn_EliminarDato.FlatAppearance.BorderSize = 0;
             btn_EliminarDato.FlatStyle = FlatStyle.Flat;
             btn_EliminarDato.ForeColor = Color.White;
-            btn_EliminarDato.Location = new Point(646, 273);
+            btn_EliminarDato.Location = new Point(642, 273);
             btn_EliminarDato.Margin = new Padding(3, 2, 3, 2);
             btn_EliminarDato.Name = "btn_EliminarDato";
             btn_EliminarDato.Size = new Size(100, 34);
@@ -648,5 +660,6 @@
         private ColumnHeader FechaAgendada;
         private ColumnHeader HoraAgendada;
         private ColumnHeader EstadoAgendada;
+        private Label label2;
     }
 }

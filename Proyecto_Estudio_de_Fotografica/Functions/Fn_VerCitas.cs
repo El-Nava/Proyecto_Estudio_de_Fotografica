@@ -67,8 +67,8 @@ namespace Proyecto_Estudio_de_Fotografica.Functions
                         item.SubItems.Add(reader["NombreCompletoCliente"].ToString());
                         item.SubItems.Add(reader["FechaAgendada"].ToString());
                         item.SubItems.Add(reader["HoraAgendada"].ToString());
-                        item.SubItems.Add(reader["ServicioID"].ToString());
                         item.SubItems.Add(reader["Pago"].ToString());
+                        item.SubItems.Add(reader["ServicioID"].ToString());
                         item.SubItems.Add(reader["EstadoCita"].ToString());
 
                         // Añadir el item completo al ListView
